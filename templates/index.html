@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #eaeaea;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Biblioteca</h1>
+    <a href="{{ url_for('cadastrar_livro') }}">Cadastrar Novo Livro</a>
+    <a href="{{ url_for('consultar_livros') }}">Consultar Livros</a>
+    <h2>Livros Disponíveis</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Disponível</th>
+            <th>Ações</th>
+        </tr>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro[0] }}</td>
+            <td>{{ livro[1] }}</td>
+            <td>{{ livro[2] }}</td>
+            <td>{{ 'Sim' if livro[3] == 1 else 'Não' }}</td>
+            <td>
+                {% if livro[3] == 1 %}
+                    <a href="{{ url_for('emprestar_livro', livro_id=livro[0]) }}">Emprestar</a>
+                {% else %}
+                    <a href="{{ url_for('devolver_livro', livro_id=livro[0]) }}">Devolver</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
