@@ -19,15 +19,26 @@ def cadastrar_livro():
         return redirect(url_for('index'))
     return render_template('cadastrar.html')
 
-@app.route('/emprestar/<int:livro_id>')
-def emprestar_livro(livro_id):
-    biblioteca.emprestar_livro(livro_id)
-    return render_template('emprestar.html')
+@app.route('/processar_cadastro', methods=['POST'])
+def processar_cadastro():
+    titulo = request.form['titulo']
+    autor = request.form['autor']
+    biblioteca.adicionar_livro(titulo, autor)
+    return redirect(url_for('index'))
 
-@app.route('/devolver/<int:livro_id>')
+@app.route('/emprestar/<int:livro_id>', methods=['GET'])
+def emprestar_livro(livro_id):
+    return render_template('emprestar.html', livro_id=livro_id)
+
+@app.route('/processar_emprestimo/<int:livro_id>', methods=['POST'])
+def processar_emprestimo(livro_id):
+    biblioteca.emprestar_livro(livro_id)  # Removendo o usuário como argumento
+    return redirect(url_for('index'))
+
+@app.route('/devolver/<int:livro_id>', methods=['GET'])
 def devolver_livro(livro_id):
     biblioteca.devolver_livro(livro_id)
-    return render_template('devolver.html')
+    return redirect(url_for('index'))
 
 @app.route('/consultar')
 def consultar_livros():

@@ -6,57 +6,132 @@
     <title>Biblioteca</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8; /* Fundo mais suave */
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
             padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em; /* Tamanho do título maior */
+        }
+        nav {
+            margin: 20px 0;
+        }
+        nav a {
+            margin: 0 15px;
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            background-color: #0056b3;
+            transition: background-color 0.3s, transform 0.2s; /* Adicionado efeito de transformação */
+        }
+        nav a:hover {
+            background-color: #004494;
+            transform: scale(1.05); /* Efeito de zoom no hover */
+        }
+        .container {
+            width: 90%;
+            max-width: 900px; /* Largura do container aumentada */
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333; /* Cor do subtítulo */
+            margin-bottom: 10px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid #ccc;
-            padding: 10px;
+            border: 1px solid #ddd;
+            padding: 12px;
             text-align: left;
         }
         th {
-            background-color: #eaeaea;
+            background-color: #007BFF;
+            color: white;
+            position: sticky; /* Cabeçalho fixo na rolagem */
+            top: 0;
+            z-index: 1; /* Assegura que o cabeçalho fique acima do conteúdo */
         }
-        a {
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Efeito de destaque na linha ao passar o mouse */
+        }
+        .action-buttons a {
             text-decoration: none;
-            color: #007BFF;
+            color: #fff;
+            background-color: #28a745;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.2s; /* Efeito de transformação */
+        }
+        .action-buttons a:hover {
+            background-color: #218838;
+            transform: scale(1.05); /* Efeito de zoom no hover */
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <h1>Biblioteca</h1>
-    <a href="{{ url_for('cadastrar_livro') }}">Cadastrar Novo Livro</a>
-    <a href="{{ url_for('consultar_livros') }}">Consultar Livros</a>
-    <h2>Livros Disponíveis</h2>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Disponível</th>
-            <th>Ações</th>
-        </tr>
-        {% for livro in livros %}
-        <tr>
-            <td>{{ livro[0] }}</td>
-            <td>{{ livro[1] }}</td>
-            <td>{{ livro[2] }}</td>
-            <td>{{ 'Sim' if livro[3] == 1 else 'Não' }}</td>
-            <td>
-                {% if livro[3] == 1 %}
-                    <a href="{{ url_for('emprestar_livro', livro_id=livro[0]) }}">Emprestar</a>
-                {% else %}
-                    <a href="{{ url_for('devolver_livro', livro_id=livro[0]) }}">Devolver</a>
-                {% endif %}
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
+    <header>
+        <h1>Biblioteca</h1>
+    </header>
+    <div class="container">
+        <nav>
+            <a href="{{ url_for('cadastrar_livro') }}">Cadastrar Novo Livro</a>
+            <a href="{{ url_for('consultar_livros') }}">Consultar Livros</a>
+        </nav>
+        <h2>Livros Disponíveis</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Disponível</th>
+                <th>Ações</th>
+            </tr>
+            {% for livro in livros %}
+            <tr>
+                <td>{{ livro[0] }}</td>
+                <td>{{ livro[1] }}</td>
+                <td>{{ livro[2] }}</td>
+                <td>{{ 'Sim' if livro[3] == 1 else 'Não' }}</td>
+                <td class="action-buttons">
+                    {% if livro[3] == 1 %}
+                        <a href="{{ url_for('emprestar_livro', livro_id=livro[0]) }}">Emprestar</a>
+                    {% else %}
+                        <a href="{{ url_for('devolver_livro', livro_id=livro[0]) }}">Devolver</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <footer>
+        &copy; 2024 Biblioteca - Todos os direitos reservados
+    </footer>
 </body>
 </html>

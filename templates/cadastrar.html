@@ -8,33 +8,64 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
         }
-        form {
-            margin-top: 20px;
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            width: 50%;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
         input[type="text"] {
-            padding: 10px;
-            margin: 10px 0;
             width: 100%;
-            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
         button {
-            padding: 10px 15px;
-            background-color: #007BFF;
+            background-color: #4CAF50;
             color: white;
+            padding: 10px 15px;
             border: none;
+            border-radius: 5px;
             cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
 <body>
-    <h1>Cadastrar Livro</h1>
-    <form method="POST">
-        <input type="text" name="titulo" placeholder="Título" required>
-        <input type="text" name="autor" placeholder="Autor" required>
-        <button type="submit">Cadastrar</button>
-    </form>
-    <a href="{{ url_for('index') }}">Voltar</a>
+    <header>
+        <h1>Cadastrar Livro</h1>
+    </header>
+    <div class="container">
+        <form action="{{ url_for('processar_cadastro') }}" method="POST">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
+            <label for="autor">Autor:</label>
+            <input type="text" id="autor" name="autor" required>
+            <button type="submit">Cadastrar</button>
+        </form>
+    </div>
 </body>
 </html>

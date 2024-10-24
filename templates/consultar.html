@@ -6,43 +6,111 @@
     <title>Consultar Livros</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
             padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
         th, td {
-            border: 1px solid #ccc;
             padding: 10px;
             text-align: left;
+            border-bottom: 1px solid #ddd;
         }
         th {
-            background-color: #eaeaea;
+            background-color: #007BFF;
+            color: white;
+        }
+        .action-buttons a {
+            margin: 0 5px;
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .action-buttons a:hover {
+            text-decoration: underline;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <h1>Livros Cadastrados</h1>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Autor</th>
-            <th>Disponível</th>
-        </tr>
-        {% for livro in livros %}
-        <tr>
-            <td>{{ livro[0] }}</td>
-            <td>{{ livro[1] }}</td>
-            <td>{{ livro[2] }}</td>
-            <td>{{ 'Sim' if livro[3] == 1 else 'Não' }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-    <a href="{{ url_for('index') }}">Voltar</a>
+    <header>
+        <h1>Consultar Livros</h1>
+    </header>
+    <div class="container">
+        <h2>Livros Disponíveis</h2>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Título</th>
+                <th>Autor</th>
+                <th>Disponível</th>
+                <th>Ações</th>
+            </tr>
+            {% for livro in livros %}
+            <tr>
+                <td>{{ livro[0] }}</td>
+                <td>{{ livro[1] }}</td>
+                <td>{{ livro[2] }}</td>
+                <td>{{ 'Sim' if livro[3] == 1 else 'Não' }}</td>
+                <td class="action-buttons">
+                    {% if livro[3] == 1 %}
+                        <a href="{{ url_for('emprestar_livro', livro_id=livro[0]) }}">Emprestar</a>
+                    {% else %}
+                        <a href="{{ url_for('devolver_livro', livro_id=livro[0]) }}">Devolver</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        <button onclick="window.history.back();">Voltar</button>
+    </div>
+    <footer>
+        &copy; 2024 Biblioteca - Todos os direitos reservados
+    </footer>
 </body>
 </html>

@@ -6,15 +6,83 @@
     <title>Devolver Livro</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #007BFF;
+            color: white;
             padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #218838;
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <h1>Devolver Livro</h1>
-    <p>Livro devolvido com sucesso!</p>
-    <a href="{{ url_for('index') }}">Voltar</a>
+    <header>
+        <h1>Devolver Livro</h1>
+    </header>
+    <div class="container">
+        <form action="{{ url_for('processar_devolucao', livro_id=livro_id) }}" method="POST">
+            <label for="nome_usuario">Nome do Usuário:</label>
+            <input type="text" id="nome_usuario" name="nome_usuario" required>
+            <button type="submit">Devolver</button>
+        </form>
+    </div>
+    <footer>
+        &copy; 2024 Biblioteca - Todos os direitos reservados
+    </footer>
 </body>
 </html>
